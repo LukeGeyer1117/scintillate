@@ -1,0 +1,12 @@
+# DJANGO
+django
+djangorestframework
+django-cors-headers
+
+# PostgreSQL Adapter
+psycopg[binary]
+
+# DOCUMENTATION
+drf-spectacular
+drf-spectacular[swagger]
+drf-spectacular[redoc]
