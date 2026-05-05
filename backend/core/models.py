@@ -30,7 +30,7 @@ class Project(models.Model):
         SUSPENDED   = "SUSPENDED", "Suspended"
 
     # Use a UUID to keep malefactors from just guessing at project id's.
-    uuid            = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    uuid            = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
 
     # User-facing info
     name            = models.CharField(max_length=150, blank=False)
@@ -78,6 +78,27 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+class Membership(models.Model):
+    uuid             = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
 
+    # Foreign Keys
+    user           = models.ForeignKey(User, on_delete=models.CASCADE)
+    project        = models.ForeignKey(Project, on_delete=models.CASCADE)
 
-## TODO: Implement a Membership Model
+    # Level of control over project is determined by the membership role of the user.
+    # Any user who does not have at least one of these membership types has no rights
+    # or powers to affect or view the project.
+    class Role(models.TextChoices):
+        OWNER       = "OWNER", "Owner"
+        ADMIN       = "ADMIN", "Admin"
+        EDITOR      = "EDITOR", "Editor"
+        COMMENTER   = "COMMENTER", "Commenter"
+        VIEWER      = "VIEWER", "Viewer"
+    role            = models.CharField(
+        max_length=30,
+        choices=Role.choices,
+        default=Role.VIEWER
+    )
+
+    class Meta:
+        unique_together = ("user", "project")
