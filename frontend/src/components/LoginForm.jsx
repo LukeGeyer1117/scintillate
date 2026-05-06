@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { login } from "../api/auth";
 import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 
 export default function LoginForm() {
     const [username, setUsername] = useState("");
@@ -22,10 +23,17 @@ export default function LoginForm() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Login</h2>
 
-            <Input placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-            <Input placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <div className="flex flex-col gap-6">
+                <div className="grid gap-2">
+                    <Label htmlFor="username">Username</Label>
+                    <Input id="username" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                </div>
+                <div className="grid gap-2">
+                    <Label htmlFor="password">Password</Label>
+                    <Input id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+            </div>
 
             <button type="submit">Login</button>
         </form>
