@@ -2,10 +2,11 @@ import { Card, CardHeader, CardContent, CardTitle, CardDescription, CardAction }
 import { Button } from "@/components/ui/button";
 import { LoginForm } from "@/components/LoginForm";
 import { Link } from "react-router-dom";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export default function LoginPage() {
     return (
-        <div className="bg-gray-200 h-screen w-screen">
+        <div className="bg-background h-screen w-screen">
             <div className="w-full h-[80vh] flex flex-col gap-4 items-center absolute top-[20vh]">
                 <h1 className="text-2xl font-semibold">Let's <span className="text-indigo-600">Scintillate</span></h1>
                 <Card className="w-full max-w-md">
@@ -28,6 +29,7 @@ export default function LoginPage() {
                     <Button variant="link" className="underline cursor-pointer">Terms & Conditions</Button>
                     &bull;
                     <Button variant="link" className="underline cursor-pointer">Privacy Policy</Button>
+                    <ModeToggle />
                 </div>
             </div>
         </div>

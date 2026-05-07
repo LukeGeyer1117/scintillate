@@ -4,13 +4,14 @@ import { Button } from "./ui/button";
 import { login } from "../services/auth"
 import { useState } from "react";
 import { Spinner } from "./ui/spinner";
-import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
 import { toast } from 'sonner';
+import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isDisabled, setIsDisabled] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -19,8 +20,14 @@ export const LoginForm = () => {
         setIsDisabled(true);
 
         try {
-            await login(username, password);
+            const data = await login(username, password);
+            localStorage.setItem('access', data.access);
+            localStorage.setItem('refresh', data.refresh);
+
             toast.success("Login successful!");
+            setTimeout(() => {
+                navigate("/dashboard")
+            }, 150)
         } catch (err) {
             console.error(err);
             toast.error("Login unsuccessful. Check your username and password and try again.");
